@@ -1,0 +1,250 @@
+{
+	"info": {
+		"_postman_id": "b9628649-be52-49aa-9e77-a977cb96d02a",
+		"name": "Absensi",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "10914866"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"ary\",\n    \"password\": \"ary123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BASE_URL}}/auth/regist"
+					},
+					"response": [
+						{
+							"name": "Register",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"username\": \"ary\",\n    \"password\": \"ary123\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{BASE_URL}}/auth/regist"
+							},
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": true,\n    \"code\": \"201\",\n    \"message\": \"Success created\",\n    \"data\": {\n        \"id\": \"56f31d34-9522-4600-91fd-b60df8e2017d\",\n        \"username\": \"ary\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"adit\",\n    \"password\": \"123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BASE_URL}}/auth/login"
+					},
+					"response": [
+						{
+							"name": "Login",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"username\": \"ary\",\n    \"password\": \"ary123\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{LOCAL:3000}}/auth/regist"
+							},
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": true,\n    \"code\": \"200\",\n    \"message\": \"Success login\",\n    \"data\": {\n        \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2NTU4OWQ4Zi1mYTdiLTRmYjItYjhkOC1jZWFmZjQ5MWI3NDAiLCJpYXQiOjE3MDQxMjc3ODYsImV4cCI6MTcwNDEzMTM4Nn0.IV0Lyu49nFvZCEr-07dwkR2CMQhvBBopTmUBn38Q32Y\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Generate Password",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{BASE_URL}}/auth/generate-password"
+					},
+					"response": [
+						{
+							"name": "Generate Password",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": "{{LOCAL:3000}}/auth/generate-password"
+							},
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": true,\n    \"code\": \"200\",\n    \"message\": \"Success generated\",\n    \"data\": {\n        \"newPassword\": \"@j8Ccw3gx!YSt\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Change Password",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\":\"ahmad\",\n    \"password\": \"123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BASE_URL}}/auth/change-password"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Get User Data",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsImlhdCI6MTcxNDE1NDQ2MSwiZXhwIjoxNzE0MTU4MDYxfQ.DmFx-33A_84z-awsuULmo554xLh0AyGwCAq9zv0SSBc"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{BASE_URL}}/user"
+					},
+					"response": [
+						{
+							"name": "Generate Password",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": "{{LOCAL:3000}}/auth/generate-password"
+							},
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": true,\n    \"code\": \"200\",\n    \"message\": \"Success generated\",\n    \"data\": {\n        \"newPassword\": \"@j8Ccw3gx!YSt\"\n    }\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Attendance",
+			"item": [
+				{
+					"name": "Live Attendance",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsImlhdCI6MTcxNDE1NDQ2MSwiZXhwIjoxNzE0MTU4MDYxfQ.DmFx-33A_84z-awsuULmo554xLh0AyGwCAq9zv0SSBc"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userId\": 1,\n    \"type\": \"CLOCK_IN\",\n    \"longitude\": 106.762777,\n    \"latitude\": -6.190634,\n    \"photo\":\"photo\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BASE_URL}}/attendance"
+					},
+					"response": [
+						{
+							"name": "Generate Password",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": "{{LOCAL:3000}}/auth/generate-password"
+							},
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": true,\n    \"code\": \"200\",\n    \"message\": \"Success generated\",\n    \"data\": {\n        \"newPassword\": \"@j8Ccw3gx!YSt\"\n    }\n}"
+						}
+					]
+				}
+			]
+		}
+	]
+}
