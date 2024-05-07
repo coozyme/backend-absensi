@@ -1,3 +1,4 @@
+const { Op } = require('sequelize');
 const { Absensi } = require("../models");
 const { Response } = require("../utils/response/response");
 const { TimeZoneIndonesia, GetTime, GetDate } = require("../utils/times/timezone");
@@ -5,10 +6,9 @@ const { TimeZoneIndonesia, GetTime, GetDate } = require("../utils/times/timezone
 module.exports = {
    Live: async (req, res) => {
       try {
-         const { userId, type, longitude, latitude, photo, id } = req.body
+         const { userId, type, longitude, latitude, photo } = req.body
+         let id = req?.query?.id || 0
 
-         // var sd = TimeZoneIndonesia().getDate()
-         // console.log('LOGG-D', sd)
          var payload = {
             user_id: userId,
             clock_in: GetTime(),
@@ -20,7 +20,7 @@ module.exports = {
 
          var condition = {
             where: {
-               created_at: GetDate()
+               [Op.and]: [{ id: id }, { user_id: userId }, { created_at: GetDate() }]
             }
          }
 
@@ -36,18 +36,11 @@ module.exports = {
 
             condition = {
                where: {
-                  id: id,
-                  created_at: GetDate()
+                  [Op.and]: [{ id: id }, { user_id: userId }, { created_at: GetDate() }]
                }
             }
          }
 
-         // const absensi = await Absensi.create(payload)
-         // const absensi = await Absensi.findOne({
-         //    where: {
-         //       created_at: TimeZoneIndonesia().getDate()
-         //    }
-         // })
          const abs = Absensi
             .findOne(condition)
             .then(function (obj) {
