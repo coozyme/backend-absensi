@@ -55,11 +55,12 @@ CREATE TABLE `cuti` (
 CREATE TABLE `request_cuti` (
   `id` int NOT NULL AUTO_INCREMENT,
   `cuti_id` int NOT NULL,
-  `type_cuti` ENUM('FULL DAY','HALF DAY AFTER BREAK','HALF DAY BEFORE BREAK'),
+  `type_cuti` ENUM('TAHUNAN','HAMIL'),
   `status_cuti` ENUM('PENDING','APPROVED','REJECTED','CANCELLED'),
   `reason` text,
-  `start_date` datetime DEFAULT CURRENT_TIMESTAMP,
-  `end_date` datetime DEFAULT CURRENT_TIMESTAMP,
+  `start_date` DATE DEFAULT NULL,
+  `end_date` DATE DEFAULT NULL,
+  `created_at` datetime DEFAULT (CURRENT_DATE),
   PRIMARY KEY (`id`),
   FOREIGN KEY (`cuti_id`) REFERENCES `cuti` (`id`)
 );

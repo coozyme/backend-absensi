@@ -24,7 +24,7 @@ const auth = require('./routes/auth.js');
 // const product = require('./routes/productions.js');
 // const managementRole = require('./routes/management-user.js');
 const absensi = require('./routes/absensi.js');
-// const categories = require('./routes/categories.js');
+const cuti = require('./routes/cuti.js');
 const user = require('./routes/user.js');
 // const dashboardAnalytic = require('./routes/dashboard-analytic.js');
 
@@ -52,7 +52,7 @@ app.use('/user', user);
 // app.use('/product', product);
 // app.use('/management-user', managementRole);
 app.use('/attendance', absensi);
-// app.use('/categories', categories);
+app.use('/leave', cuti);
 // app.use('/dashboard/category', categoryRouter);
 
 
