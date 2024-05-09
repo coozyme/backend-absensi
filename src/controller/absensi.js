@@ -61,4 +61,40 @@ module.exports = {
          res.status(500).send(Response(false, "500", "Internal Server Error", null))
       }
    },
+   GetAllByUserID: async (req, res) => {
+      try {
+         let userId = req?.params?.userId || 0
+
+         var absensi = await Absensi.findAll({
+            where: {
+               user_id: userId
+            }
+         })
+         const dataObject = []
+
+         absensi.forEach(v => {
+            var data = {
+               clockIn: v.clock_in,
+               clockOut: v.clock_out,
+               longitudeClockin: v.longitude_clockin,
+               latitudeClockin: v.latitude_clockin,
+               longitudeClockout: v.longitude_clockout,
+               latitudeClockout: v.latitude_clockout,
+               photoClockin: v.photo_clockin,
+               photoClockout: v.photo_clockout,
+               date: v.created_at
+            }
+            dataObject.push(data)
+         });
+
+
+         res.set('Content-Type', 'application/json')
+         res.status(200).send(Response(true, "200", "Success", dataObject.reverse()))
+      } catch (err) {
+         console.log('LOG-ERR-Get', err)
+         res.set('Content-Type', 'application/json')
+         res.status(500).send(Response(false, "500", "Internal Server Error", null))
+      }
+
+   }
 }
