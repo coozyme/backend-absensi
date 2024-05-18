@@ -16,7 +16,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"username\": \"ary\",\n    \"password\": \"ary123\"\n}",
+							"raw": "{\n    \"username\": \"agus\",\n    \"password\": \"agus123\",\n    \"fullname\": \"Agus\",\n    \"role\": 4\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -64,7 +64,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"username\": \"adit\",\n    \"password\": \"123\"\n}",
+							"raw": "{\n    \"username\": \"ary\",\n    \"password\": \"ary123\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -219,7 +219,254 @@
 								}
 							}
 						},
-						"url": "{{BASE_URL}}/attendance"
+						"url": {
+							"raw": "{{BASE_URL}}/attendance?id=4",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"attendance"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "4"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Generate Password",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": "{{LOCAL:3000}}/auth/generate-password"
+							},
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": true,\n    \"code\": \"200\",\n    \"message\": \"Success generated\",\n    \"data\": {\n        \"newPassword\": \"@j8Ccw3gx!YSt\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Get Absensi by userID",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsImlhdCI6MTcxNDE1NDQ2MSwiZXhwIjoxNzE0MTU4MDYxfQ.DmFx-33A_84z-awsuULmo554xLh0AyGwCAq9zv0SSBc"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BASE_URL}}/attendance/user/1"
+					},
+					"response": [
+						{
+							"name": "Generate Password",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": "{{LOCAL:3000}}/auth/generate-password"
+							},
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": true,\n    \"code\": \"200\",\n    \"message\": \"Success generated\",\n    \"data\": {\n        \"newPassword\": \"@j8Ccw3gx!YSt\"\n    }\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Cuti",
+			"item": [
+				{
+					"name": "Set Leave",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userId\": 1,\n    \"limit\": 12,\n    \"generatedAt\": \"2024-05-09 00:00:00\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BASE_URL}}/leave/set-leave"
+					},
+					"response": [
+						{
+							"name": "Generate Password",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": "{{LOCAL:3000}}/auth/generate-password"
+							},
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": true,\n    \"code\": \"200\",\n    \"message\": \"Success generated\",\n    \"data\": {\n        \"newPassword\": \"@j8Ccw3gx!YSt\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Request Cuti",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsImlhdCI6MTcxNDE1NDQ2MSwiZXhwIjoxNzE0MTU4MDYxfQ.DmFx-33A_84z-awsuULmo554xLh0AyGwCAq9zv0SSBc"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"cutiId\":3,\n    \"type\":\"TAHUNAN\",\n    \"reason\": \"izin\",\n    \"startDate\": \"2024-10-01\",\n    \"endDate\": \"2024-10-01\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BASE_URL}}/leave/request-leave"
+					},
+					"response": [
+						{
+							"name": "Generate Password",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": "{{LOCAL:3000}}/auth/generate-password"
+							},
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": true,\n    \"code\": \"200\",\n    \"message\": \"Success generated\",\n    \"data\": {\n        \"newPassword\": \"@j8Ccw3gx!YSt\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Get All Cuti By Cuti Id",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsImlhdCI6MTcxNDE1NDQ2MSwiZXhwIjoxNzE0MTU4MDYxfQ.DmFx-33A_84z-awsuULmo554xLh0AyGwCAq9zv0SSBc"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"cutiId\":3,\n    \"type\":\"TAHUNAN\",\n    \"reason\": \"izin\",\n    \"startDate\": \"2024-10-01\",\n    \"endDate\": \"2024-10-01\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BASE_URL}}/leave/3"
+					},
+					"response": [
+						{
+							"name": "Generate Password",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": "{{LOCAL:3000}}/auth/generate-password"
+							},
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": true,\n    \"code\": \"200\",\n    \"message\": \"Success generated\",\n    \"data\": {\n        \"newPassword\": \"@j8Ccw3gx!YSt\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Approve Cuti",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsImlhdCI6MTcxNDE1NDQ2MSwiZXhwIjoxNzE0MTU4MDYxfQ.DmFx-33A_84z-awsuULmo554xLh0AyGwCAq9zv0SSBc"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"status\":\"REJECTED\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BASE_URL}}/leave/approval/1"
 					},
 					"response": [
 						{

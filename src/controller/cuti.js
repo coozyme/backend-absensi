@@ -82,19 +82,6 @@ module.exports = {
       try {
          let cutiId = req?.params?.cutiId || 0
 
-
-         // var dataCuti = await Cuti.findOne({
-         //    where: { id: cutiId }
-         // })
-
-         // var limitCuti = dataCuti?.dataValues?.limit
-         // // console.log('CUTI-=DATS', dataCuti)
-         // if (limitCuti <= 0) {
-         //    res.set('Content-Type', 'application/json')
-         //    res.status(422).send(Response(false, "422", "max usage cuti", null))
-         //    return
-         // }
-
          var reqCuti = await RequestCuti.findAll({
             where: { cuti_id: cutiId }
          });
@@ -123,4 +110,32 @@ module.exports = {
       }
 
    },
+   ApproveCuti: async (req, res) => {
+      try {
+         const { status } = req.body
+         let id = req?.params?.id || 0
+
+         console.log('LOG-ID', id)
+         var reqCuti = await RequestCuti.update({
+            status_cuti: status?.toUpperCase()
+         }, {
+            where: { id: id }
+         })
+
+         console.log('LOG-reqCuti', reqCuti)
+
+         if (reqCuti.length < 1) {
+            res.set('Content-Type', 'application/json')
+            res.status(422).send(Response(false, "422", "Failed", null))
+            return
+         }
+
+         res.set('Content-Type', 'application/json')
+         res.status(200).send(Response(true, "200", "Success", null))
+      } catch (err) {
+         console.log('LOG-ERR-Get', err)
+         res.set('Content-Type', 'application/json')
+         res.status(500).send(Response(false, "500", "Internal Server Error", null))
+      }
+   }
 }
