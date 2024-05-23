@@ -9,21 +9,42 @@ CREATE TABLE `roles` (
   UNIQUE KEY `title` (`title`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci
 
-CREATE TABLE `users` (
+CREATE TABLE `devisi` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `fullname` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `username` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `title` varchar(255) NOT NULL DEFAULT '',
+    PRIMARY KEY (`id`)
+);
+
+INSERT INTO devisi (title) VALUES ('Produksi'), ('Manager');
+
+CREATE TABLE `shift` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) NOT NULL DEFAULT '',
+  `clock_in` TIME DEFAULT NULL,
+  `clock_out` TIME DEFAULT NULL,
+    PRIMARY KEY (`id`)
+);
+
+INSERT INTO shift (title, clock_in, clock_out) 
+VALUES ('Shift 1', '06:00:00', '17:00:00'), ('Shift 2', '15:00:00', '24:00:00'), ('Shift 3', '24:00:00', '8:00:00');
+
+
+CREATE TABLE `users` (
+  `id`int NOT NULL AUTO_INCREMENT,
+  `fullname` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `username` varchar(128) COLLATE utf8mb4_general_ci NOT NULL,
+  `password` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
   `is_active` tinyint(1) DEFAULT '0',
   `role_id` int DEFAULT NULL,
+  `devisi` int DEFAULT NULL,
+  `shift` int DEFAULT 1,
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime DEFAULT NULL,
   `deleted_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`),
-  KEY `role_id` (`role_id`),
-  CONSTRAINT `users_ibfk_1` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci
+  FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`)
+); ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci
 
 CREATE TABLE `absensi` (
   `id` int NOT NULL AUTO_INCREMENT,

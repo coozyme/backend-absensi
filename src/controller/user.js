@@ -1,5 +1,5 @@
 
-const { Users, Roles, Menus } = require("../models");
+const { Users, Roles, Devisi, Shift } = require("../models");
 const { AuthPayload } = require("../middleware/auth");
 const { Response } = require("../utils/response/response");
 const { EncryptPassword, CheckPassword, GenerateToken, GeneratePassword } = require("../utils/encrypt/encrypt");
@@ -25,14 +25,21 @@ module.exports = {
                id: id,
                deleted_at: null
             },
+            include: [
+               {
+                  model: Devisi,
+                  as: "devisi",
+               },
+               {
+                  model: Shift,
+                  as: "shift",
+               },
+               {
+                  model: Roles,
+                  as: "role",
+               },
+            ],
          })
-         // const user = await Users.findByPk(id)
-         // const user = await sequelize.query(`SELECT * FROM users WHERE BIN_TO_UUID(id) = :id`, {
-         //    replacements: { id: `${auth.id}` },
-         //    type: QueryTypes.SELECT,
-         //    model: Users,
-         //    mapToModel: true // pass true here if you have any mapped fields
-         // });
          console.log('LOG-user', user)
 
          if (!user) {
@@ -40,28 +47,6 @@ module.exports = {
             res.status(404).send(Response(false, "404", "User not found", null))
             return
          }
-
-         // const empl = await Employee.findOne({
-         //    where: {
-         //       user_id: id,
-         //       deleted_at: null
-         //    },
-         //    include: [
-         //       {
-         //          model: Roles,
-         //          as: "role",
-         //          attributes: {
-         //             exclude: ["created_at", "updated_at", "deleted_at"]
-         //          }
-         //       },
-         //    ],
-         // })
-
-         // if (!empl) {
-         //    res.set('Content-Type', 'application/json')
-         //    res.status(404).send(Response(false, "404", "Employee not found", null))
-         //    return
-         // }
 
          const role = await Roles.findOne({
             where: {
@@ -80,15 +65,18 @@ module.exports = {
             //    }
             // ]
          })
-         // const menu = []
-         // permissionRole.map((item) => {
-         //    const data = {
-         //       id: item.menu.id,
-         //       name: item.menu.name,
-         //       menu_key: item.menu.menu_key,
-         //    }
-         //    menu.push(data)
 
+         // const devisi = await Devisi.findOne({
+         //    where: {
+         //       id: user?.id
+         //    }
+         // })
+         // console.log('LOG-Devisi',devisi)
+
+         // const shiftSchedule = await Shift.findOne({
+         //    where: {
+         //       id: shift?.id
+         //    }
          // })
 
          const dataResponse = {
@@ -96,7 +84,19 @@ module.exports = {
             username: user.username,
             fullname: user.fullname,
             fullname: user.fullname,
-            Role: role.id
+            devisi: {
+               id: user?.devisi?.id,
+               title: user?.devisi?.title,
+            },
+            schedule: {
+               title: user?.shift?.title,
+               clockIn: user?.shift?.clock_in,
+               clockOut: user?.shift?.clock_out,
+            },
+            Role: {
+               id: user?.role?.id,
+               title: user?.role?.title,
+            }
          }
 
 

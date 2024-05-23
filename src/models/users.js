@@ -15,6 +15,15 @@ module.exports = (sequelize, DataTypes) => {
          password: {
             type: DataTypes.STRING,
          },
+         devisi_id: {
+            type: DataTypes.INTEGER,
+            allowNull: true
+         },
+         shift_id: {
+            type: DataTypes.INTEGER,
+            defaultValue: 1,
+            allowNull: true
+         },
          role_id: {
             type: DataTypes.INTEGER,
             allowNull: true
@@ -50,6 +59,16 @@ module.exports = (sequelize, DataTypes) => {
       Users.belongsTo(models.Roles, {
          foreignKey: 'role_id',
          as: 'role'
+      })
+
+      Users.belongsTo(models.Devisi, {
+         foreignKey: 'devisi_id',
+         as: 'devisi'
+      })
+
+      Users.belongsTo(models.Shift, {
+         foreignKey: 'shift_id',
+         as: 'shift'
       })
    }
 
