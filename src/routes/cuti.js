@@ -6,7 +6,7 @@ const { SetCuti, RequestCuti, GetAllCutiByCutiId, ApproveCuti, GetCutiUser } = r
 router.post('/set-leave', SetCuti);
 router.post('/request-leave', RequestCuti);
 router.get('/:cutiId', GetAllCutiByCutiId);
-router.post('/approval/:id', ApproveCuti);
+router.post('/approval/:id/:cutiID', ApproveCuti);
 router.get('/data-cuti/:userId', GetCutiUser);
 
 module.exports = router;

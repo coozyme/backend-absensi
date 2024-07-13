@@ -89,6 +89,7 @@ module.exports = {
          var dataObject = []
          reqCuti.forEach(v => {
             var data = {
+               id: v.id,
                typeCuti: v.type_cuti,
                statusCuti: v.status_cuti,
                reason: v.reason,
@@ -114,21 +115,44 @@ module.exports = {
       try {
          const { status } = req.body
          let id = req?.params?.id || 0
+         let cutiID = req?.params?.cutiID || 0
 
-         console.log('LOG-ID', id)
-         var reqCuti = await RequestCuti.update({
-            status_cuti: status?.toUpperCase()
-         }, {
-            where: { id: id }
+         console.log('LOG-ID', id, cutiID)
+         var st = status?.toUpperCase()
+         var dataCuti = await Cuti.findOne({
+            where: { id: cutiID }
          })
 
-         console.log('LOG-reqCuti', reqCuti)
+         var limitCuti = dataCuti?.dataValues?.limit
+
+
+         if (limitCuti <= 0) {
+            res.set('Content-Type', 'application/json')
+            res.status(422).send(Response(false, "422", "max usage cuti", null))
+            return
+         }
+
+
+         var reqCuti = await RequestCuti.update({
+            status_cuti: st
+         }, {
+            where: { id: id }
+         });
 
          if (reqCuti.length < 1) {
             res.set('Content-Type', 'application/json')
             res.status(422).send(Response(false, "422", "Failed", null))
             return
          }
+         console.log('LOG-st', st, limitCuti)
+         if (st === "APPROVED") {
+            await Cuti.update({
+               limit: limitCuti - 1
+            }, {
+               where: { id: cutiID }
+            })
+         }
+
 
          res.set('Content-Type', 'application/json')
          res.status(200).send(Response(true, "200", "Success", null))
