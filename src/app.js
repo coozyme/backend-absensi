@@ -12,7 +12,7 @@ const port = process.env.PORT || 3001;
 
 
 var app = express();
-
+app.use(cors());
 // view engine setup
 // app.set('views', path.join(__dirname, 'views'));
 // app.set('view engine', 'ejs');
@@ -43,7 +43,7 @@ var corsOptions = {
   origin: 'http:/127.0.0.1',
   optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) chok
 }
-app.use(cors());
+
 app.use('/auth', auth);
 // app.use('/', dashboard);
 // app.use('/dashboard', dashboardAnalytic);
@@ -95,8 +95,8 @@ app.use(function (err, req, res, next) {
 
 
 const server = http.createServer(app);
-const { SocketInstance } = Socket.createSocket(server);
-SocketInstance(server);
+// const { SocketInstance } = Socket.createSocket(server);
+// SocketInstance(server);
 
 
 server.listen(port, () => {

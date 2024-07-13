@@ -137,5 +137,21 @@ module.exports = {
          res.set('Content-Type', 'application/json')
          res.status(500).send(Response(false, "500", "Internal Server Error", null))
       }
+   },
+   GetCutiUser: async (req, res) => {
+      try {
+         let userId = req?.params?.userId || 0
+
+         var dataCuti = await Cuti.findOne({
+            where: { user_id: userId }
+         })
+
+         res.set('Content-Type', 'application/json')
+         res.status(200).send(Response(true, "200", "Success", dataCuti))
+      } catch (err) {
+         console.log('LOG-ERR-Get', err)
+         res.set('Content-Type', 'application/json')
+         res.status(500).send(Response(false, "500", "Internal Server Error", null))
+      }
    }
 }
