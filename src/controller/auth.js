@@ -1,10 +1,11 @@
 const UUID = require('uuid');
 
-const { Users } = require("../models");
+const { Users, Cuti } = require("../models");
 const { AuthPayload } = require("../middleware/auth");
 const { Response } = require("../utils/response/response");
 const { EncryptPassword, CheckPassword, GenerateToken, GeneratePassword } = require("../utils/encrypt/encrypt");
-const { TimeZoneIndonesia } = require("../utils/times/timezone");
+const { TimeZoneIndonesia, GetDate } = require("../utils/times/timezone");
+const user = require('./user');
 
 module.exports = {
    Login: async (req, res) => {
@@ -52,21 +53,43 @@ module.exports = {
    },
    Register: async (req, res) => {
       try {
-         const { fullname, username, password, role } = req.body
+         const { fullname, username, password, role, devisiID, shiftID, limitCuti } = req.body
          passwordHash = await EncryptPassword(password)
          uuid = UUID.v4()
 
-         user = await Users.create({
+         const user = await Users.create({
             fullname: fullname,
             username: username,
             password: passwordHash,
             role_id: role,
+            devisi_id: devisiID,
+            shift_id: shiftID,
             is_active: 1,
             created_at: TimeZoneIndonesia(),
          })
+
+         if (!user) {
+            res.set('Content-Type', 'application/json')
+            res.status(500).send(Response(false, "500", "Internal Server Error", null))
+            return
+         }
+         const datauser = await Users.findOne({
+            where: {
+               username: user.username,
+            },
+         })
+         userId = datauser.dataValues.id
+
+         await Cuti.create({
+            user_id: userId,
+            limit: limitCuti,
+            created_at: GetDate()
+         });
+
          dataObject = {
-            id: uuid,
-            username: user.username,
+            id: datauser.dataValues.id,
+            username: user.dataValues.username,
+            fullname: user.dataValues.fullname,
          }
          res.set('Content-Type', 'application/json')
          res.status(201).send(Response(true, "201", "Success created", dataObject))
