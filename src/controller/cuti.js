@@ -133,9 +133,7 @@ module.exports = {
          }
 
 
-         var reqCuti = await RequestCuti.update({
-            status_cuti: st
-         }, {
+         var reqCuti = await RequestCuti.findOne({
             where: { id: id }
          });
 
@@ -144,13 +142,42 @@ module.exports = {
             res.status(422).send(Response(false, "422", "Failed", null))
             return
          }
-         console.log('LOG-st', st, limitCuti)
+
+
+         const startDate = new Date(reqCuti?.dataValues?.start_date)
+         const endDate = new Date(reqCuti?.dataValues?.end_date)
+
+         const timeDifference = endDate - startDate;
+
+         // Calculate the number of days
+         const daysDifference = timeDifference / (1000 * 3600 * 24);
+         console.log('LOG-daysDifference', daysDifference)
+
+         if (limitCuti < daysDifference) {
+            res.set('Content-Type', 'application/json')
+            res.status(422).send(Response(false, "422", "max limit cuti", null))
+            return
+         }
+
          if (st === "APPROVED") {
             await Cuti.update({
-               limit: limitCuti - 1
+               limit: limitCuti - daysDifference,
+               updated_at: GetDate()
             }, {
                where: { id: cutiID }
             })
+            await RequestCuti.update({
+               status_cuti: "APPROVED"
+            }, {
+               where: { id: id }
+            });
+
+         } else {
+            await RequestCuti.update({
+               status_cuti: status
+            }, {
+               where: { id: id }
+            });
          }
 
 
@@ -164,9 +191,10 @@ module.exports = {
    },
    GetCutiUser: async (req, res) => {
       try {
-         let userId = req?.params?.userId || 0
+         const auth = req.contextAuth
+         const userId = auth.uid
 
-         var dataCuti = await Cuti.findOne({
+         const dataCuti = await Cuti.findOne({
             where: { user_id: userId }
          })
 
